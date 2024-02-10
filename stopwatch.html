@@ -8,15 +8,16 @@
            
             <link rel="stylesheet" href="stopwatch.css" type="text/css">
             <script type="text/javascript" src="stopwatch.js"></script>
-            <link rel="icon" href="stopWatchIcon.png" sizes="32x32" type="image/png">
+            <link rel="icon" href="photos/stopWatchIcon.png" sizes="32x32" type="image/png">
         </head>
     <body>
-        <img class="logo"src="stopWatchIogo.png">
+        <img class="logo"src="photos/stopWatchIogo.png">
         <div id="time">00:00:00.00</div>
         <div class="controls">
-            <button id="startButton" onclick="start()">Start</button>
-            <button id="stopButton" onclick="stop()">Pause</button>
-            <button id="resetButton" onclick="reset()">Reset</button>
+            <button onclick="startPause()"><img id="startButton" src="photos/play.png"></button>
+            <button onclick="reset()"><img id="resetButton" src="photos/undo.png"></button>
+            <!-- <button id="stopButton" onclick="stop()">Pause</button>
+            -->
         </div>
         <div class="laps">lap1 00:00:00.00</div>
     </body>

@@ -2,23 +2,36 @@ var startTime=0;
 var isRunning=false;
 var currentTime;
 var passedTime;
-function start(){
+function startPause(){
     if(!isRunning){
     isRunning=true;
     startTime=Date.now()-startTime;
+    var imageElement = document.getElementById("startButton");
+    imageElement.src = "photos/pause-button.png";
+     imageElement = document.getElementById("resetButton");
+    imageElement.src = "photos/arrow.png";
     var timeDisplay = document.getElementById("time");
     timeDisplay.style.color="green";
     setInterval(update,10);
     }
+    else{
+        isRunning=false;
+        var imageElement = document.getElementById("startButton");
+        imageElement.src = "photos/play.png";
+        imageElement = document.getElementById("resetButton");
+        imageElement.src = "photos/undo.png";
+        startTime=passedTime;
+        var timeDisplay = document.getElementById("time");
+        timeDisplay.style.color="red";
+    }
 };
-function stop(){
+function resetLap(){
+    if(isRunning){
+       
+    }
     isRunning=false;
-    startTime=passedTime;
-    var timeDisplay = document.getElementById("time");
-    timeDisplay.style.color="red";
-};
-function reset(){
-    isRunning=false;
+    var imageElement = document.getElementById("startButton");
+    imageElement.src = "photos/play.png";
     startTime=0;
     currentTime=null;
     passedTime=null;
