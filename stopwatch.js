@@ -2,55 +2,63 @@ var startTime=0;
 var isRunning=false;
 var currentTime;
 var passedTime;
-function startPause(){
+var toDisplay;
+var forLapstime=0;
+var counter=1;
+function start(){
     if(!isRunning){
     isRunning=true;
     startTime=Date.now()-startTime;
-    var imageElement = document.getElementById("startButton");
-    imageElement.src = "photos/pause-button.png";
-     imageElement = document.getElementById("resetButton");
-    imageElement.src = "photos/arrow.png";
     var timeDisplay = document.getElementById("time");
     timeDisplay.style.color="green";
     setInterval(update,10);
     }
-    else{
+};
+function pause(){
+    if(isRunning){
         isRunning=false;
-        var imageElement = document.getElementById("startButton");
-        imageElement.src = "photos/play.png";
-        imageElement = document.getElementById("resetButton");
-        imageElement.src = "photos/undo.png";
         startTime=passedTime;
         var timeDisplay = document.getElementById("time");
         timeDisplay.style.color="red";
-    }
+    }    
 };
-function resetLap(){
-    if(isRunning){
-       
-    }
+function reset(){
     isRunning=false;
-    var imageElement = document.getElementById("startButton");
-    imageElement.src = "photos/play.png";
     startTime=0;
     currentTime=null;
     passedTime=null;
     var timeDisplay = document.getElementById("time");
     timeDisplay.style.color="#101A1C";
     timeDisplay.innerHTML = `00:00:00.00`;
+    forLapstime=0;
+    document.getElementById("laps").innerHTML = "";
+    counter=1;
 };
 function update(){
     if(isRunning){
      currentTime=Date.now();
      passedTime=currentTime-startTime;
-     var hours=Math.floor(passedTime/(1000*60*60));
-     hours=hours.toString().padStart(2, '0');
-     var minutes=Math.floor(passedTime/(1000*60)%60);
-     minutes=minutes.toString().padStart(2, '0');
-     var seconds=Math.floor(passedTime/(1000)%60);
-     seconds=seconds.toString().padStart(2, '0');
-     var milliSec=Math.floor((passedTime/10)%100);
-     var toDisplay=document.getElementById("time");
-     toDisplay.innerHTML = `${hours} : ${minutes} : ${seconds}.${milliSec}`;
+     toDisplay=document.getElementById("time");
+     toDisplay.innerHTML =formatTime(passedTime);
 }
 };
+function laps(){
+    if(isRunning){
+    var lapTime =passedTime - forLapstime;
+    forLapstime = passedTime;
+    var formattedLapTime = formatTime(lapTime);
+    console.log(formattedLapTime);
+    var paragraph = document.createElement("p");
+    paragraph.textContent = "Lap"+counter+"  "+formattedLapTime;
+    counter+=1;
+    var lapsContainer = document.getElementById("laps");
+    lapsContainer.insertBefore(paragraph, lapsContainer.firstChild);
+    }
+};
+function formatTime(passedTime) {
+     var hours=Math.floor(passedTime/(1000*60*60));
+     var minutes=Math.floor(passedTime/(1000*60)%60);
+     var seconds=Math.floor(passedTime/(1000)%60);
+     var milliSec=Math.floor((passedTime/10)%100);
+     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}.${milliSec.toString().padStart(2, '0')}`;
+}
