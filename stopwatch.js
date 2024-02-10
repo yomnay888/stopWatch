@@ -33,6 +33,7 @@ function reset(){
     forLapstime=0;
     document.getElementById("laps").innerHTML = "";
     counter=1;
+    //
 };
 function update(){
     if(isRunning){
